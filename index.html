@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Javascript playground</title>
+</head>
+<style>
+    body {
+        font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        font-size:12px;
+    }
+
+    table {
+        padding: 12px;
+        width: 100%;
+    }
+
+    tr.logTitle {
+        background-color: #666;
+        font-weight: 800;
+        color: #FFF;
+    }
+
+    tr.logBody:nth-child(even) {
+        background: #F0F0F0;
+    }
+
+    tr.logBody:nth-child(odd) {
+        background: none;
+    }
+
+    td {
+        padding:6px;
+    }
+
+    td.logTime {
+        width: 30%;
+    }
+
+    td.logEvent {
+        width: 70%;
+    }
+</style>
+<body>
+
+  <table id="tableConsole">
+      <thead>
+          <tr class="logTitle">
+              <td class="logTime">Time</td>
+              <td class="logEvent">Event</td>
+          </tr>
+      </thead>
+      <tbody id="tbodyConsole">
+
+      </tbody>
+  </table>
+
+  <script type="text/javascript">
+    function appendLog(event){
+        let tbConsole = document.getElementById("tbodyConsole");
+        let rowEvent = tbConsole.insertRow();
+        let cellTime = rowEvent.insertCell(0);
+        let cellEvent = rowEvent.insertCell(1);
+
+        rowEvent.classList.add("logBody");
+
+        cellTime.innerHTML = (new Date()).toISOString();
+        cellTime.classList.add("logTime");
+
+        cellEvent.innerHTML = event;
+        cellEvent.classList.add("logEvent");
+    }
+
+    console.stdlog = console.log.bind(console);
+    console.logs = [];
+    console.log = function(){
+        console.logs.push(Array.from(arguments));
+        console.stdlog.apply(console, arguments);
+        appendLog(Array.from(arguments))
+    }
+
+    
+</script>
+
+<script type="text/javascript" src="./test.js"></script>
+</body>
+</html>
